@@ -1,0 +1,5 @@
+Install the following using:
+
+crontab -e
+
+*/10 * * * * ${HOME}/bin/hue-timer/timer.py >> ${HOME}/bin/hue-timer/timer.log
