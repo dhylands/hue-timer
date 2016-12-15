@@ -91,11 +91,11 @@ def get_bridge():
 def set_light(light_on):
     try:
         b = get_bridge()
-        for light_num in [light_num for light_num, light in b.lights().items() if light['name'] == LIGHT_NAME]:
-            curr_state = b.lights[light_num]()
-            if curr_state['state']['on'] != light_on:
+        for light_num in [light_num for light_num, light in b.lights().items() if light['name'].startswith(LIGHT_NAME)]:
+            light = b.lights[light_num]()
+            if light['state']['on'] != light_on:
                 time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-                print(time_str, 'Turning', curr_state['name'], 'light', 'on' if light_on else 'off')
+                print("{} Turning '{}' light {}".format(time_str, light['name'], 'on' if light_on else 'off'))
             b.lights[light_num].state(on=light_on)
     except:
         print(sys.exc_info()[1])
@@ -104,10 +104,10 @@ def get_light():
     try:
         b = get_bridge()
 
-        for light_num in [light_num for light_num, light in b.lights().items() if light['name'] == LIGHT_NAME]:
+        for light_num in [light_num for light_num, light in b.lights().items() if light['name'].startswith(LIGHT_NAME)]:
             light = b.lights[light_num]()
             time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-            print(time_str, LIGHT_NAME, 'light is', 'on' if light['state']['on'] else 'off')
+            print("{} '{}' light is {}".format(time_str, light['name'], 'on' if light['state']['on'] else 'off'))
     except:
         print(sys.exc_info()[1])
 
